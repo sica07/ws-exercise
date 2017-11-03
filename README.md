@@ -32,9 +32,10 @@ and log into it:
 1. Load in two separate windows the following urls:
    - http://200.0.100.10/index.html
    - http://200.0.100.10/client.html
+   
    _(Of course, if not using docker, you should replace the IP with the one from the config files.)_
 
 2. In the **index.html** browser window upload an image. As a result:
-* in the **index.html** you should see the _download_ link for the image.
-* in the **client.html** window the image should load
+  * in the **index.html** you should see the _download_ link for the image.
+  * in the **client.html** window the image should load
 
