@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Sender</title>
+        <script src="config.js" charset="utf-8"></script>
+    </head>
+    <body>
+        <h3>Upload image:</h3>
+        <form>
+            <input type="file" id="picture" accept="image/png,image/jpeg"/>
+        </form>
+        <small>Only jpg and png formats accepted</small>
+        <hr/>
+        <div>
+            <a href="" id="link"></a>
+        </div>
+
+
+        <script>
+            const ws = new WebSocket("ws://" + server_ip + ":" + ws_port);
+            ws.binaryType = "arraybuffer";
+
+            document.getElementById("picture").addEventListener('change', function(){
+                const reader = new FileReader;
+                const filename = this.files[0]['name'];
+
+                reader.onloadend = function (e) {
+                    ws.send(e.target.result);
+                }
+
+                reader.readAsArrayBuffer(this.files[0]);
+            });
+
+            //on message from ws server
+            ws.onmessage = function(e) { 
+                createLink(e.data);
+            };
+
+            function createLink(data) {
+                const link = document.getElementById('link');
+                link.innerText = 'Download image';
+                link.href = data;
+            }
+        </script>
+    </body>
+</html>

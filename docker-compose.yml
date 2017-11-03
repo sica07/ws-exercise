@@ -1,0 +1,21 @@
+version: "2"
+
+networks:
+    wsnet:
+        driver: "bridge"
+        ipam:
+            config:
+            - subnet: 200.0.100.0/24
+              gateway: 200.0.100.1
+
+services:
+    srv:
+        image: php:7.1-apache-jessie
+        volumes:
+            - ./:/var/www/html
+        ports:
+            - "8880:8880"
+        networks:
+            wsnet:
+                ipv4_address: 200.0.100.10
+

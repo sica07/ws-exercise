@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Client</title>
+        <script src="config.js" charset="utf-8"></script>
+    </head>
+    <body>
+        <h3>Images uploaded:</h3>
+        <div>
+            <img width="500" id="img"/>  
+        </div>
+
+
+        <script>
+            const ws = new WebSocket("ws://" + server_ip + ":" + ws_port);
+            ws.binaryType = "arraybuffer";
+
+
+            //on message from ws server
+            ws.onmessage = function(e) { 
+                createImage(e.data);
+            };
+
+            function createImage(bufferArr) {
+                const urlObject = URL.createObjectURL(new Blob([bufferArr]));
+                const image = document.getElementById('img');
+                image.src = urlObject;
+            }
+        </script>
+    </body>
+</html>
